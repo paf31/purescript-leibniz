@@ -9,6 +9,10 @@
     "bower_components",
     "output"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/paf31/purescript-leibniz.git"
+  },
   "dependencies": {
     "purescript-prelude": "~0.1.2",
     "purescript-unsafe-coerce": "~0.1.0"
