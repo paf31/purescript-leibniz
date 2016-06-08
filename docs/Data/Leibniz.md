@@ -13,14 +13,20 @@ Two types are equal if they are _equal in all contexts_.
 
 ##### Instances
 ``` purescript
-instance semigroupoidLeibniz :: Semigroupoid Leibniz
-instance categoryLeibniz :: Category Leibniz
+Semigroupoid Leibniz
+Category Leibniz
+```
+
+#### `type (~)`
+
+``` purescript
+infix 4 type Leibniz as ype (~
 ```
 
 #### `runLeibniz`
 
 ``` purescript
-runLeibniz :: forall f a b. Leibniz a b -> f a -> f b
+runLeibniz :: forall f a b. a ~ b -> f a -> f b
 ```
 
 Unpack a Leibniz equality.
@@ -28,7 +34,7 @@ Unpack a Leibniz equality.
 #### `symm`
 
 ``` purescript
-symm :: forall a b. Leibniz a b -> Leibniz b a
+symm :: forall a b. a ~ b -> b ~ a
 ```
 
 Equality is symmetric.
@@ -36,7 +42,7 @@ Equality is symmetric.
 #### `coerce`
 
 ``` purescript
-coerce :: forall f a b. Leibniz a b -> a -> b
+coerce :: forall a b. a ~ b -> a -> b
 ```
 
 Coerce a value of type `a` to a value of the Leibniz-equal type `b`
@@ -44,7 +50,7 @@ Coerce a value of type `a` to a value of the Leibniz-equal type `b`
 #### `liftLeibniz`
 
 ``` purescript
-liftLeibniz :: forall f a b. Leibniz a b -> Leibniz (f a) (f b)
+liftLeibniz :: forall f a b. a ~ b -> (f a) ~ (f b)
 ```
 
 Lift equality over a type constructor.
@@ -52,7 +58,7 @@ Lift equality over a type constructor.
 #### `liftLeibniz2`
 
 ``` purescript
-liftLeibniz2 :: forall f a b c. Leibniz a b -> Leibniz (f a c) (f b c)
+liftLeibniz2 :: forall f a b c. a ~ b -> (f a c) ~ (f b c)
 ```
 
 Lift equality over a type constructor.
@@ -60,7 +66,7 @@ Lift equality over a type constructor.
 #### `liftLeibniz3`
 
 ``` purescript
-liftLeibniz3 :: forall f a b c d. Leibniz a b -> Leibniz (f a c d) (f b c d)
+liftLeibniz3 :: forall f a b c d. a ~ b -> (f a c d) ~ (f b c d)
 ```
 
 Lift equality over a type constructor.
@@ -68,7 +74,7 @@ Lift equality over a type constructor.
 #### `lowerLeibniz`
 
 ``` purescript
-lowerLeibniz :: forall f a b. Leibniz (f a) (f b) -> Leibniz a b
+lowerLeibniz :: forall f a b. (f a) ~ (f b) -> a ~ b
 ```
 
 Every type constructor in PureScript is injective.
@@ -76,7 +82,7 @@ Every type constructor in PureScript is injective.
 #### `lowerLeibniz2`
 
 ``` purescript
-lowerLeibniz2 :: forall f a b c. Leibniz (f a c) (f b c) -> Leibniz a b
+lowerLeibniz2 :: forall f a b c. (f a c) ~ (f b c) -> a ~ b
 ```
 
 Every type constructor in PureScript is injective.
@@ -84,7 +90,7 @@ Every type constructor in PureScript is injective.
 #### `lowerLeibniz3`
 
 ``` purescript
-lowerLeibniz3 :: forall f a b c d. Leibniz (f a c d) (f b c d) -> Leibniz a b
+lowerLeibniz3 :: forall f a b c d. (f a c d) ~ (f b c d) -> a ~ b
 ```
 
 Every type constructor in PureScript is injective.
