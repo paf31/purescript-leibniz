@@ -4,6 +4,7 @@ module Data.Leibniz
   , type (~)
   , runLeibniz
   , coerce
+  , coerceSymm
   , symm
   , liftLeibniz
   , liftLeibniz2
@@ -36,9 +37,13 @@ instance categoryLeibniz :: Category Leibniz where
 symm :: forall a b. a ~ b -> b ~ a
 symm _ = Leibniz unsafeCoerce
 
--- | Coerce a value of type `a` to a value of the Leibniz-equal type `b`
+-- | Coerce a value of type `a` to a value of the Leibniz-equal type `b`.
 coerce :: forall a b. a ~ b -> a -> b
 coerce _ = unsafeCoerce
+
+-- | Coerce a value of type `b` to a value of the Leibniz-equal type `a`.
+coerceSymm :: forall a b. a ~ b -> b -> a
+coerceSymm _ = unsafeCoerce
 
 -- | Lift equality over a type constructor.
 liftLeibniz :: forall f a b. a ~ b -> f a ~ f b
