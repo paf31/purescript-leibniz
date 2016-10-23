@@ -62,9 +62,21 @@ lowerLeibniz :: forall f a b. f a ~ f b -> a ~ b
 lowerLeibniz _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz2 :: forall f a b c. f a c ~ f b c -> a ~ b
+lowerLeibniz2 :: forall f a b c d. f a c ~ f b d -> a ~ b
 lowerLeibniz2 _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz3 :: forall f a b c d. f a c d ~ f b c d -> a ~ b
+lowerLeibniz2' :: forall f a b c d. f a c ~ f b d -> c ~ d
+lowerLeibniz2' _ = Leibniz unsafeCoerce
+
+-- | Every type constructor in PureScript is injective.
+lowerLeibniz3 :: forall f a b c d e g. f a b c ~ f d e g -> a ~ d
 lowerLeibniz3 _ = Leibniz unsafeCoerce
+
+-- | Every type constructor in PureScript is injective.
+lowerLeibniz3' :: forall f a b c d e g. f a b c ~ f d e g -> b ~ e
+lowerLeibniz3' _ = Leibniz unsafeCoerce
+
+-- | Every type constructor in PureScript is injective.
+lowerLeibniz3'' :: forall f a b c d e g. f a b c ~ f d e g -> c ~ g
+lowerLeibniz3'' _ = Leibniz unsafeCoerce
