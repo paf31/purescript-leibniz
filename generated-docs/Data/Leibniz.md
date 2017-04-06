@@ -63,18 +63,42 @@ liftLeibniz :: forall f a b. a ~ b -> (f a) ~ (f b)
 
 Lift equality over a type constructor.
 
-#### `liftLeibniz2`
+#### `liftLeibniz1of2`
 
 ``` purescript
-liftLeibniz2 :: forall f a b c. a ~ b -> (f a c) ~ (f b c)
+liftLeibniz1of2 :: forall f a b c. a ~ b -> (f a c) ~ (f b c)
 ```
 
 Lift equality over a type constructor.
 
-#### `liftLeibniz3`
+#### `liftLeibniz2of2`
 
 ``` purescript
-liftLeibniz3 :: forall f a b c d. a ~ b -> (f a c d) ~ (f b c d)
+liftLeibniz2of2 :: forall f a b c. a ~ b -> (f c a) ~ (f c b)
+```
+
+Lift equality over a type constructor.
+
+#### `liftLeibniz1of3`
+
+``` purescript
+liftLeibniz1of3 :: forall f a b c d. a ~ b -> (f a c d) ~ (f b c d)
+```
+
+Lift equality over a type constructor.
+
+#### `liftLeibniz2of3`
+
+``` purescript
+liftLeibniz2of3 :: forall f a b c d. a ~ b -> (f c a d) ~ (f c b d)
+```
+
+Lift equality over a type constructor.
+
+#### `liftLeibniz3of3`
+
+``` purescript
+liftLeibniz3of3 :: forall f a b c d. a ~ b -> (f c d a) ~ (f c d b)
 ```
 
 Lift equality over a type constructor.
@@ -87,18 +111,42 @@ lowerLeibniz :: forall f a b. (f a) ~ (f b) -> a ~ b
 
 Every type constructor in PureScript is injective.
 
-#### `lowerLeibniz2`
+#### `lowerLeibniz1of2`
 
 ``` purescript
-lowerLeibniz2 :: forall f a b c d. (f a c) ~ (f b d) -> a ~ b
+lowerLeibniz1of2 :: forall f a b c d. (f a c) ~ (f b d) -> a ~ b
 ```
 
 Every type constructor in PureScript is injective.
 
-#### `lowerLeibniz3`
+#### `lowerLeibniz2of2`
 
 ``` purescript
-lowerLeibniz3 :: forall f a b c d e g. (f a b c) ~ (f d e g) -> a ~ d
+lowerLeibniz2of2 :: forall f a b c d. (f a c) ~ (f b d) -> c ~ d
+```
+
+Every type constructor in PureScript is injective.
+
+#### `lowerLeibniz1of3`
+
+``` purescript
+lowerLeibniz1of3 :: forall f a b c d e g. (f a b c) ~ (f d e g) -> a ~ d
+```
+
+Every type constructor in PureScript is injective.
+
+#### `lowerLeibniz2of3`
+
+``` purescript
+lowerLeibniz2of3 :: forall f a b c d e g. (f a b c) ~ (f d e g) -> b ~ e
+```
+
+Every type constructor in PureScript is injective.
+
+#### `lowerLeibniz3of3`
+
+``` purescript
+lowerLeibniz3of3 :: forall f a b c d e g. (f a b c) ~ (f d e g) -> c ~ g
 ```
 
 Every type constructor in PureScript is injective.
