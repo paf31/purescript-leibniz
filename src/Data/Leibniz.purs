@@ -34,10 +34,10 @@ runLeibniz :: forall f a b. a ~ b -> f a -> f b
 runLeibniz (Leibniz f) = f
 
 instance semigroupoidLeibniz :: Semigroupoid Leibniz where
-  compose _ _ = Leibniz unsafeCoerce
+  compose = flip trans
 
 instance categoryLeibniz :: Category Leibniz where
-  id = Leibniz id
+  id = refl
 
 -- | Equality is reflexive.
 refl :: forall a. a ~ a
