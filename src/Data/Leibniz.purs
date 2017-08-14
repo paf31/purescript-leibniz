@@ -39,6 +39,14 @@ instance semigroupoidLeibniz :: Semigroupoid Leibniz where
 instance categoryLeibniz :: Category Leibniz where
   id = Leibniz id
 
+-- | Equality is reflexive.
+refl :: forall a. a ~ a
+refl = Leibniz id
+
+-- | Equality is transitive.
+trans :: forall a b c. a ~ b -> b ~ c -> a ~ c
+trans (Leibniz f) (Leibniz g) = Leibniz (g <<< f)
+
 -- | Equality is symmetric.
 symm :: forall a b. a ~ b -> b ~ a
 symm _ = Leibniz unsafeCoerce
