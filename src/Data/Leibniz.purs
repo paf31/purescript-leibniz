@@ -18,6 +18,8 @@ module Data.Leibniz
   , lowerLeibniz1of3
   , lowerLeibniz2of3
   , lowerLeibniz3of3
+  , class Distinguish
+  , refute
   ) where
 
 import Prelude
@@ -37,11 +39,11 @@ instance semigroupoidLeibniz :: Semigroupoid Leibniz where
   compose = flip trans
 
 instance categoryLeibniz :: Category Leibniz where
-  id = refl
+  identity = refl
 
 -- | Equality is reflexive.
 refl :: forall a. a ~ a
-refl = Leibniz id
+refl = Leibniz identity
 
 -- | Equality is transitive.
 trans :: forall a b c. a ~ b -> b ~ c -> a ~ c
@@ -106,3 +108,43 @@ lowerLeibniz2of3 _ = Leibniz unsafeCoerce
 -- | Every type constructor in PureScript is injective.
 lowerLeibniz3of3 :: forall f a b c d e g. f a b c ~ f d e g -> c ~ g
 lowerLeibniz3of3 _ = Leibniz unsafeCoerce
+
+-- | This class is used in the definition of the `refute` function.
+-- |
+-- | Its job is to distinguish the two types `a` and `b` (if possible)
+-- | by mapping them to the different output types `Unit` and `Void`
+-- | respectively.
+class Distinguish a b c o | a b c -> o
+
+instance distinguishLeft :: Distinguish a b a Unit else
+instance distinguishRight :: Distinguish a b b Void
+
+-- | A type for which `Distinguished a b c` is isomorphic to the unique output
+-- | `o` of the `Distinguish` relation such that `Distinguish a b c o` holds.
+foreign import data Distinguished :: Type -> Type -> Type -> Type
+
+distinguished :: forall a b c r. Distinguish a b c r => r -> Distinguished a b c
+distinguished = unsafeCoerce
+
+unDistinguished :: forall a b c r. Distinguish a b c r => Distinguished a b c -> r
+unDistinguished = unsafeCoerce
+
+-- | Refute a type equality for two types which are not definitionally equal.
+-- |
+-- | For example, in the REPL:
+-- |
+-- | ```
+-- | > import Data.Leibniz
+-- |
+-- | > :type \(l :: String ~ Int) -> refute l
+-- | forall r. Leibniz String Int -> r
+-- |
+-- | > :type \(l :: String ~ String) -> refute l
+-- | Error found:
+-- |   Could not match type Unit with type Void
+-- | ```
+-- |
+-- | The error message here is due to the way in which the `Distinguish` class decides
+-- | apartness.
+refute :: forall a b r. Distinguish a b b Void => a ~ b -> r
+refute l = absurd (unDistinguished (runLeibniz l (distinguished unit :: Distinguished a b a)))
