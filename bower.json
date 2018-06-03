@@ -15,11 +15,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "purescript-prelude": "^3.0.0",
-    "purescript-unsafe-coerce": "^3.0.0"
+    "purescript-prelude": "^4.0.0",
+    "purescript-unsafe-coerce": "^4.0.0"
   },
   "devDependencies": {
-    "purescript-console": "^3.0.0",
-    "purescript-exists": "^3.0.0"
+    "purescript-exists": "^4.0.0",
+    "purescript-console": "^4.1.0"
   }
 }

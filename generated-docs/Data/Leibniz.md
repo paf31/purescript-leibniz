@@ -31,14 +31,6 @@ runLeibniz :: forall f a b. a ~ b -> f a -> f b
 
 Unpack a Leibniz equality.
 
-#### `symm`
-
-``` purescript
-symm :: forall a b. a ~ b -> b ~ a
-```
-
-Equality is symmetric.
-
 #### `coerce`
 
 ``` purescript
@@ -54,6 +46,14 @@ coerceSymm :: forall a b. a ~ b -> b -> a
 ```
 
 Coerce a value of type `b` to a value of the Leibniz-equal type `a`.
+
+#### `symm`
+
+``` purescript
+symm :: forall a b. a ~ b -> b ~ a
+```
+
+Equality is symmetric.
 
 #### `liftLeibniz`
 
@@ -150,5 +150,47 @@ lowerLeibniz3of3 :: forall f a b c d e g. (f a b c) ~ (f d e g) -> c ~ g
 ```
 
 Every type constructor in PureScript is injective.
+
+#### `Distinguish`
+
+``` purescript
+class Distinguish a b c o | a b c -> o
+```
+
+This class is used in the definition of the `refute` function.
+
+Its job is to distinguish the two types `a` and `b` (if possible)
+by mapping them to the different output types `Unit` and `Void`
+respectively.
+
+##### Instances
+``` purescript
+Distinguish a b a Unit
+Distinguish a b b Void
+```
+
+#### `refute`
+
+``` purescript
+refute :: forall a b r. Distinguish a b b Void => a ~ b -> r
+```
+
+Refute a type equality for two types which are not definitionally equal.
+
+For example, in the REPL:
+
+```
+> import Data.Leibniz
+
+> :type \(l :: String ~ Int) -> refute l
+forall r. Leibniz String Int -> r
+
+> :type \(l :: String ~ String) -> refute l
+Error found:
+  Could not match type Unit with type Void
+```
+
+The error message here is due to the way in which the `Distinguish` class decides
+apartness.
 
 
