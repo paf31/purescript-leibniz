@@ -86,27 +86,27 @@ liftLeibniz3of3 :: forall f a b c d. a ~ b -> f c d a ~ f c d b
 liftLeibniz3of3 _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz :: forall f a b. f a ~ f b -> a ~ b
+lowerLeibniz :: forall f g a b. f a ~ g b -> a ~ b
 lowerLeibniz _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz1of2 :: forall f a b c d. f a c ~ f b d -> a ~ b
+lowerLeibniz1of2 :: forall f g a b c d. f a c ~ g b d -> a ~ b
 lowerLeibniz1of2 _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz2of2 :: forall f a b c d. f a c ~ f b d -> c ~ d
+lowerLeibniz2of2 :: forall f g a b c d. f a c ~ g b d -> c ~ d
 lowerLeibniz2of2 _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz1of3 :: forall f a b c d e g. f a b c ~ f d e g -> a ~ d
+lowerLeibniz1of3 :: forall f g a b c d e h. f a b c ~ g d e h -> a ~ d
 lowerLeibniz1of3 _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz2of3 :: forall f a b c d e g. f a b c ~ f d e g -> b ~ e
+lowerLeibniz2of3 :: forall f g a b c d e h. f a b c ~ g d e h -> b ~ e
 lowerLeibniz2of3 _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
-lowerLeibniz3of3 :: forall f a b c d e g. f a b c ~ f d e g -> c ~ g
+lowerLeibniz3of3 :: forall f g a b c d e h. f a b c ~ g d e h -> c ~ h
 lowerLeibniz3of3 _ = Leibniz unsafeCoerce
 
 -- | This class is used in the definition of the `refute` function.
