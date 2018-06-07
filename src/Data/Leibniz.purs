@@ -12,6 +12,12 @@ module Data.Leibniz
   , liftLeibniz1of3
   , liftLeibniz2of3
   , liftLeibniz3of3
+  , applyLeibniz
+  , applyLeibniz1of2
+  , applyLeibniz2of2
+  , applyLeibniz1of3
+  , applyLeibniz2of3
+  , applyLeibniz3of3
   , lowerLeibniz
   , lowerLeibniz1of2
   , lowerLeibniz2of2
@@ -63,27 +69,51 @@ coerceSymm _ = unsafeCoerce
 
 -- | Lift equality over a type constructor.
 liftLeibniz :: forall f a b. a ~ b -> f a ~ f b
-liftLeibniz _ = Leibniz unsafeCoerce
+liftLeibniz = applyLeibniz identity
 
 -- | Lift equality over a type constructor.
 liftLeibniz1of2 :: forall f a b c. a ~ b -> f a c ~ f b c
-liftLeibniz1of2 _ = Leibniz unsafeCoerce
+liftLeibniz1of2 = applyLeibniz1of2 identity
 
 -- | Lift equality over a type constructor.
 liftLeibniz2of2 :: forall f a b c. a ~ b -> f c a ~ f c b
-liftLeibniz2of2 _ = Leibniz unsafeCoerce
+liftLeibniz2of2 = applyLeibniz2of2 identity
 
 -- | Lift equality over a type constructor.
 liftLeibniz1of3 :: forall f a b c d. a ~ b -> f a c d ~ f b c d
-liftLeibniz1of3 _ = Leibniz unsafeCoerce
+liftLeibniz1of3 = applyLeibniz1of3 identity
 
 -- | Lift equality over a type constructor.
 liftLeibniz2of3 :: forall f a b c d. a ~ b -> f c a d ~ f c b d
-liftLeibniz2of3 _ = Leibniz unsafeCoerce
+liftLeibniz2of3 = applyLeibniz2of3 identity
 
 -- | Lift equality over a type constructor.
 liftLeibniz3of3 :: forall f a b c d. a ~ b -> f c d a ~ f c d b
-liftLeibniz3of3 _ = Leibniz unsafeCoerce
+liftLeibniz3of3 = applyLeibniz3of3 identity
+
+-- | Apply an equality of type constructors to an equality of types.
+applyLeibniz :: forall f g a b c d. f c ~ g d -> a ~ b -> f a ~ g b
+applyLeibniz _ _ = Leibniz unsafeCoerce
+
+-- | Apply an equality of type constructors to an equality of types.
+applyLeibniz1of2 :: forall f g f1 f2 g1 g2 a b c. f f1 f2 ~ g g1 g2 -> a ~ b -> f a c ~ g b c
+applyLeibniz1of2 _ _ = Leibniz unsafeCoerce
+
+-- | Apply an equality of type constructors to an equality of types.
+applyLeibniz2of2 :: forall f g f1 f2 g1 g2 a b c. f f1 f2 ~ g g1 g2 -> a ~ b -> f c a ~ g c b
+applyLeibniz2of2 _ _ = Leibniz unsafeCoerce
+
+-- | Apply an equality of type constructors to an equality of types.
+applyLeibniz1of3 :: forall f g f1 f2 f3 g1 g2 g3 a b c d. f f1 f2 f3 ~ g g1 g2 g3 -> a ~ b -> f a c d ~ g b c d
+applyLeibniz1of3 _ _ = Leibniz unsafeCoerce
+
+-- | Apply an equality of type constructors to an equality of types.
+applyLeibniz2of3 :: forall f g f1 f2 f3 g1 g2 g3 a b c d. f f1 f2 f3 ~ g g1 g2 g3 -> a ~ b -> f c a d ~ g c b d
+applyLeibniz2of3 _ _ = Leibniz unsafeCoerce
+
+-- | Apply an equality of type constructors to an equality of types.
+applyLeibniz3of3 :: forall f g f1 f2 f3 g1 g2 g3 a b c d. f f1 f2 f3 ~ g g1 g2 g3 -> a ~ b -> f c d a ~ g c d b
+applyLeibniz3of3 _ _ = Leibniz unsafeCoerce
 
 -- | Every type constructor in PureScript is injective.
 lowerLeibniz :: forall f g a b. f a ~ g b -> a ~ b
